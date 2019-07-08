@@ -41,7 +41,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 train_datagen = ImageDataGenerator(rescale=1. / 255)
 
-train_generator = train_datagen.flow_from_directory('C:\\Users\\Jaydev\\Documents\\Datasets\\tf_in_practice_datasets\\happy_or_sad',
+train_generator = train_datagen.flow_from_directory('C:\\Users\\Jaydev\\Documents\\GitHub\\prac_code\\tensorflow_in_practice\\course_1_Intro_TF_AI\\Week 4\\h-or-s',
                                               target_size=(150, 150),
                                               batch_size=32,
                                               class_mode='binary')

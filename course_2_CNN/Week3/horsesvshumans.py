@@ -6,7 +6,7 @@ from tensorflow.keras import Model
 from shutil import copyfile
 import random
 
-dataset_dir = "C:\\Users\\Jaydev\\Documents\\GitHub\\prac_code\\tensorflow_in_practice\\course_2_CNN\\Week3\\dataset\\horse_or_human\\"
+dataset_dir = "C:\\Users\\Jaydev\\Documents\\Datasets\\tf_in_practice_datasets\\horse_or_human\\"
 TRAINING_DIR = dataset_dir + "training\\"
 TESTING_DIR = dataset_dir + "validation\\"
 HORSE_SOURCE_DIR = dataset_dir + "horses\\"
@@ -52,7 +52,7 @@ split_data(HUMAN_SOURCE_DIR, TRAINING_HUMANS_DIR, TESTING_HUMANS_DIR, split_size
 # https://storage.googleapis.com/mledu-datasets/inception_v3_weights_tf_dim_ordering_tf_kernels_notop.h5
 from tensorflow.keras.applications.inception_v3 import InceptionV3
 
-local_weights_file = "C:\\Users\\Jaydev\\Documents\\GitHub\\prac_code\\tensorflow_in_practice\\course_2_CNN\\Week3\\weights\\inception_v3_weights_tf_dim_ordering_tf_kernels_notop.h5"
+local_weights_file = "C:\\Users\\Jaydev\\Documents\\Datasets\\tf_in_practice_datasets\\horse_or_human\\weights\\inception_v3_weights_tf_dim_ordering_tf_kernels_notop.h5"
 
 pre_trained_model = InceptionV3(input_shape=(150, 150, 3),
                                 include_top=False,

@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-dataset_dir = "C:\\Users\\Jaydev\\Documents\\GitHub\\prac_code\\tensorflow_in_practice\\course_2_CNN\\Week4\\dataset\\"
+dataset_dir = "C:\\Users\\Jaydev\\Documents\\Datasets\\tf_in_practice_datasets\\rock_paper_scissor\\"
 TRAINING_DIR = dataset_dir + "training\\"
 TESTING_DIR = dataset_dir + "validation\\"
 

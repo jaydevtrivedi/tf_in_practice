@@ -57,7 +57,7 @@ val_acc=history.history['val_acc']
 loss=history.history['loss']
 val_loss=history.history['val_loss']
 
-epochs=range(len(acc))
+epochs=range(len(acc)) # Get number of epochs
 
 #------------------------------------------------
 # Plot training and validation accuracy per epoch
@@ -74,7 +74,6 @@ plt.plot(epochs, loss, 'r', "Training Loss")
 plt.plot(epochs, val_loss, 'b', "Validation Loss")
 plt.figure()
 
-# Predict Results
 from keras.preprocessing import image
 import numpy as np
 img = image.load_img("image_path", target_size=(150, 150))

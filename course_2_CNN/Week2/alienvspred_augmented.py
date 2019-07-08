@@ -6,13 +6,9 @@ from tensorflow.keras.optimizers import RMSprop
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from shutil import copyfile
 
-dataset_dir = "C:\\Users\\Jaydev\\Documents\\GitHub\\prac_code\\tensorflow_in_practice\\course_2_CNN\\Week1\\alien_vs_predator\\data\\"
+dataset_dir = "C:\\Users\\Jaydev\\Documents\\Datasets\\tf_in_practice_datasets\\alien_vs_predator\\"
 TRAINING_DIR = dataset_dir + "training\\"
 TESTING_DIR = dataset_dir + "testing\\"
-TRAINING_ALIEN_DIR = dataset_dir + "training\\alien\\"
-TRAINING_PREDATOR_DIR = dataset_dir + "training\\predator\\"
-TESTING_ALIEN_DIR = dataset_dir + "testing\\alien\\"
-TESTING_PREDATOR_DIR = dataset_dir + "testing\\predator\\"
 
 model = tf.keras.models.Sequential([
     tf.keras.layers.Conv2D(filters=32, kernel_size=3, strides=1, activation='relu', input_shape=(150, 150, 3)),
