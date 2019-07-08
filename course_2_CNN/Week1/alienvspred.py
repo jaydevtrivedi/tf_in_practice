@@ -6,51 +6,9 @@ from tensorflow.keras.optimizers import RMSprop
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from shutil import copyfile
 
-dataset_dir = "C:\\Users\\Jaydev\\Documents\\GitHub\\prac_code\\tensorflow_in_practice\\course_2_CNN\\Week1\\alien_vs_predator\\data\\"
-# CAT_SOURCE_DIR = dataset_dir + "Cat\\"
-# DOG_SOURCE_DIR = dataset_dir + "Dog\\"
+dataset_dir = "C:\\Users\\Jaydev\\Documents\\Datasets\\tf_in_practice_datasets\\alien_vs_predator\\"
 TRAINING_DIR = dataset_dir + "training\\"
 TESTING_DIR = dataset_dir + "testing\\"
-TRAINING_ALIEN_DIR = dataset_dir + "training\\alien\\"
-TRAINING_PREDATOR_DIR = dataset_dir + "training\\predator\\"
-TESTING_ALIEN_DIR = dataset_dir + "testing\\alien\\"
-TESTING_PREDATOR_DIR = dataset_dir + "testing\\predator\\"
-
-#
-# def split_data(SOURCE, TRAINING, TESTING, SPLIT_SIZE):
-#     files = []
-#     for filename in os.listdir(SOURCE):
-#         file = SOURCE + filename
-#         if os.path.getsize(file) > 0:
-#             files.append(filename)
-#         else:
-#             print(filename + " is zero length, so ignoring.")
-#
-#     training_length = int(len(files) * SPLIT_SIZE)
-#     testing_length = int(len(files) - training_length)
-#     shuffled_set = random.sample(files, len(files))
-#     training_set = shuffled_set[0:training_length]
-#     testing_set = shuffled_set[-testing_length:]
-#
-#     for filename in training_set:
-#         this_file = SOURCE + filename
-#         destination = TRAINING + filename
-#         copyfile(this_file, destination)
-#
-#     for filename in testing_set:
-#         this_file = SOURCE + filename
-#         destination = TESTING + filename
-#         copyfile(this_file, destination)
-#
-#
-# split_size = .9
-# split_data(CAT_SOURCE_DIR, TRAINING_CAT_DIR, TESTING_CAT_DIR, split_size)
-# split_data(DOG_SOURCE_DIR, TRAINING_DOG_DIR, TESTING_DOG_DIR, split_size)
-
-print(len(os.listdir(TRAINING_ALIEN_DIR)))
-print(len(os.listdir(TRAINING_PREDATOR_DIR)))
-print(len(os.listdir(TESTING_ALIEN_DIR)))
-print(len(os.listdir(TESTING_PREDATOR_DIR)))
 
 model = tf.keras.models.Sequential([
     tf.keras.layers.Conv2D(filters=16, kernel_size=3, strides=1, activation='relu', input_shape=(150, 150, 3)),
@@ -99,7 +57,7 @@ val_acc=history.history['val_acc']
 loss=history.history['loss']
 val_loss=history.history['val_loss']
 
-epochs=range(len(acc)) # Get number of epochs
+epochs=range(len(acc))
 
 #------------------------------------------------
 # Plot training and validation accuracy per epoch
