@@ -43,9 +43,6 @@ with open(dataset_csv, "r") as csvfile:
             sentence = sentence.replace("  ", " ")
         sentences.append(sentence)
 
-print(len(labels))
-print(len(sentences))
-print(sentences[0])
 
 train_size = int(len(sentences) * training_portion)
 

@@ -53,4 +53,4 @@ model.compile(optimizer='adam',
               loss='categorical_crossentropy',
               metrics=['accuracy'])
 
-history = model.fit_generator(train_generator, validation_data=validation_generator, steps_per_epoch=100, epochs=100, validation_steps=50, verbose=2)
+history = model.fit_generator(train_generator, validation_data=validation_generator, steps_per_epoch=100, epochs=1, validation_steps=50, verbose=2)
