@@ -27,12 +27,11 @@ stopwords = ["a", "about", "above", "after", "again", "against", "all", "am", "a
 vocab_size = 1000
 embedding_dim = 16
 max_length = 200
-trunc_type='post'
-padding_type='post'
+trunc_type = 'post'
+padding_type = 'post'
 oov_tok = "<OOV>"
 training_size = 2500
 end = 3000
-
 
 # Get the data
 dataset_df = pd.read_csv(dataset_csv)
@@ -40,16 +39,17 @@ dataset_df = pd.read_csv(dataset_csv)
 # # Get datasets
 from sklearn.model_selection import train_test_split
 
-train_dataset, extra_dataset, train_label, extra_labels = train_test_split(dataset_df['review'],
-                                                                           dataset_df['sentiment'],
-                                                                           train_size=0.1, random_state=0)
+# train_dataset, extra_dataset, train_label, extra_labels = train_test_split(dataset_df['review'],
+#                                                                            dataset_df['sentiment'],
+#                                                                            train_size=0.1, random_state=0)
 
-train_dataset, validation_dataset, train_label, validation_label = train_test_split(train_dataset,
-                                                                                    train_label,
+train_dataset, validation_dataset, train_label, validation_label = train_test_split(dataset_df['review'],
+                                                                                    dataset_df['sentiment'],
                                                                                     train_size=0.9, random_state=0)
 
 train_dataset, predict_dataset, train_label, predict_label = train_test_split(train_dataset, train_label,
                                                                               train_size=0.8, random_state=0)
+
 
 # Clean data from stopwords
 def remove_stopwords(sentence):
@@ -79,7 +79,8 @@ train_dataset = sentence_tokenizer.texts_to_sequences(train_dataset)
 train_dataset_padded = pad_sequences(train_dataset, padding=padding_type, maxlen=max_length, truncating=trunc_type)
 
 validation_dataset = sentence_tokenizer.texts_to_sequences(validation_dataset)
-validation_dataset_padded = pad_sequences(validation_dataset, padding=padding_type, maxlen=max_length, truncating=trunc_type)
+validation_dataset_padded = pad_sequences(validation_dataset, padding=padding_type, maxlen=max_length,
+                                          truncating=trunc_type)
 
 predict_dataset = sentence_tokenizer.texts_to_sequences(predict_dataset)
 predict_dataset_padded = pad_sequences(predict_dataset, padding=padding_type, maxlen=max_length, truncating=trunc_type)
@@ -93,6 +94,7 @@ validation_label = validation_label - 1
 predict_label = np.array(label_tokenizer.texts_to_sequences(predict_label))
 predict_label = predict_label - 1
 
+
 def single_layer_lstm(vocab_size):
     model = tf.keras.Sequential([
         tf.keras.layers.Embedding(vocab_size, 64),
@@ -103,6 +105,8 @@ def single_layer_lstm(vocab_size):
 
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     return model
+
+
 # imdb dataset : R2 score is 0.24971122423292957
 
 def multi_layer_lstm(vocab_size):
@@ -116,6 +120,8 @@ def multi_layer_lstm(vocab_size):
 
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     return model
+
+
 # imdb dataset : R2 score is 0.10465249519343711
 
 def conv1D(vocab_size):
@@ -129,6 +135,8 @@ def conv1D(vocab_size):
 
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     return model
+
+
 # imdb dataset : R2 score is 0.316332023545289
 
 def bidirectional_lstm(vocab_size):
@@ -140,6 +148,8 @@ def bidirectional_lstm(vocab_size):
     ])
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     return model
+
+
 # imdb dataset : R2 score is 0.348930695799229
 
 def conv1d_sarc(vocab_size):
@@ -152,6 +162,8 @@ def conv1d_sarc(vocab_size):
     ])
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     return model
+
+
 # imdb dataset : R2 score is 0.4266507584287702
 
 def multilayer_gru(vocab_size):
@@ -163,28 +175,36 @@ def multilayer_gru(vocab_size):
     ])
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     return model
+
+
 # imdb dataset : R2 score is 0.316332023545289
 
 # Fit Model
-num_epochs = 10
-early_stop = tf.keras.callbacks.EarlyStopping(monitor=['acc'], patience=3, verbose=2)
+num_epochs = 30
+early_stop = tf.keras.callbacks.EarlyStopping(monitor=['accuracy'], patience=3, verbose=2)
 model = conv1D(vocab_size)
 history = model.fit(train_dataset_padded, train_label, epochs=num_epochs,
                     validation_data=(validation_dataset_padded, validation_label), verbose=2)
 
 # Step 6 :  R2 Score
 from sklearn.metrics import r2_score
+
 print("R2 score is {}".format(r2_score(predict_label, model.predict(predict_dataset_padded))))
+
+# Step 7 : Predict a few
 
 # plot graphs
 import matplotlib.pyplot as plt
+
+
 def plot_graphs(history, string):
-  plt.plot(history.history[string])
-  plt.plot(history.history['val_'+string])
-  plt.xlabel("Epochs")
-  plt.ylabel(string)
-  plt.legend([string, 'val_'+string])
-  plt.show()
+    plt.plot(history.history[string])
+    plt.plot(history.history['val_' + string])
+    plt.xlabel("Epochs")
+    plt.ylabel(string)
+    plt.legend([string, 'val_' + string])
+    plt.show()
+
 
 plot_graphs(history, 'accuracy')
 plot_graphs(history, 'loss')

@@ -44,39 +44,22 @@ history = model.fit_generator(train_generator,
                     steps_per_epoch=150,
                     validation_data=testing_generator)
 
-# Visualise results
-import matplotlib.image  as mpimg
-import matplotlib.pyplot as plt
 
-#-----------------------------------------------------------
-# Retrieve a list of list results on training and test data
-# sets for each training epoch
-#-----------------------------------------------------------
-acc=history.history['acc']
-val_acc=history.history['val_acc']
-loss=history.history['loss']
-val_loss=history.history['val_loss']
+import numpy as np
+print(np.mean(history.history['acc']))
+print(np.max(history.history['acc']))
+# 0.71199995
+# 0.8066667
 
-epochs=range(len(acc)) # Get number of epochs
-
-#------------------------------------------------
-# Plot training and validation accuracy per epoch
-#------------------------------------------------
-plt.plot(epochs, acc, 'r', "Training Accuracy")
-plt.plot(epochs, val_acc, 'b', "Validation Accuracy")
-plt.title('Training and validation accuracy')
-plt.figure()
-
-#------------------------------------------------
-# Plot training and validation loss per epoch
-#------------------------------------------------
-plt.plot(epochs, loss, 'r', "Training Loss")
-plt.plot(epochs, val_loss, 'b', "Validation Loss")
-plt.figure()
+print(np.mean(history.history['val_acc']))
+print(np.max(history.history['val_acc']))
+# 0.6563333
+# 0.755
 
 from keras.preprocessing import image
 import numpy as np
-img = image.load_img("image_path", target_size=(150, 150))
+image_path = "C:\\Users\\Jaydev\\Documents\\Datasets\\tf_in_practice_datasets\\alien_vs_predator\\training\\predator\\10.jpg"
+img = image.load_img(image_path, target_size=(150, 150))
 x = image.img_to_array(img)
 x = np.expand_dims(x, axis=0)
 
@@ -84,6 +67,18 @@ images = np.vstack([x])
 classes = model.predict(images, batch_size=10)
 print(classes[0])
 if classes[0] > 0.5:
-    print("image_path" + " is a predator")
+    print(image_path + " is a predator")
 else:
-    print("image_path" " is a alien")
+    print(image_path + " is a alien")
+
+import matplotlib.pyplot as plt
+def plot_graphs(history, string):
+    plt.plot(history.history[string],'r')
+    plt.plot(history.history['val_' + string], 'b')
+    plt.xlabel("Epochs")
+    plt.ylabel(string)
+    plt.legend([string, 'val_' + string])
+    plt.show()
+
+plot_graphs(history, "acc")
+plot_graphs(history, "loss")
