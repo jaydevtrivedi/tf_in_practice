@@ -46,7 +46,7 @@ print(model.summary())
 history = model.fit(predictors, label, epochs=100, verbose=1)
 
 import matplotlib.pyplot as plt
-acc = history.history['acc']
+acc = history.history['accuracy']
 loss = history.history['loss']
 
 epochs = range(len(acc))
